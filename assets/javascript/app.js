@@ -108,8 +108,9 @@ $(document).ready(function() {
     });
 
     function time() {
-        $document("#timer").text(+count+" s");
+        //$document("#timer").text(+count+" s");
         count--;
+        console.log(count);
     }
 
     /*function result() {
