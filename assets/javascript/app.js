@@ -2,7 +2,7 @@ $(document).ready(function() {
     var correct;
     var wrong;
     var unanswered;
-    var time;
+    var count=30;
      
     var trivia = [{
     question: "What is Earth's largest Continent?",
@@ -70,25 +70,38 @@ $(document).ready(function() {
     image: "assets/images/image-10.jpg",
     },]
     
+    
+    //clearTimeout(timeoutId);
+
     function displayQuestion() {
-        $(".sub-wrapper").html("<div id='questions'>" + trivia[0].question + "</div>");
-        $(".sub-wrapper").append("<div id='options' value='+option[0]'>" +trivia[0].option[0]+ "</div>");
-        $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[1]+ "</div>");
-        $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[2]+ "</div>");
-        $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[3]+ "</div>");
-    }
+            var intervalId = setInterval(time, 1000);
+            $(".sub-wrapper").html("<div id='time'>"+count+"</div>")
+            $(".sub-wrapper").append("<div id='questions'>" + trivia[0].question + "</div>");
+            $(".sub-wrapper").append("<div id='options' value='+option[0]'>" +trivia[0].option[0]+ "</div>");
+            $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[1]+ "</div>");
+            $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[2]+ "</div>");
+            $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[3]+ "</div>");
+            var timeoutId = setTimeout(displayAnswer, 30000);   
+        }
 
     function displayAnswer() {
-        $(".sub-wrapper").html("<div>" +trivia[0].fact+ "</div>")
-        $(".sub-wrapper").append("<img src="+trivia[0].image+">")
+        $(".sub-wrapper").html("<div>" +trivia[0].fact+ "</div>");
+        $(".sub-wrapper").append("<img src="+trivia[0].image+">");
+        var timeoutId = setTimeout(displayAnswer, 10000);
     }
       
     $("#start-button").on("click", function() {
         displayQuestion();
+        //var intervalId = setInterval(time, 1000);
+        //console.log(count);
     });
 
-    $('#options').on("click", function() {
-        $(".sub-wrapper").empty();
+    $(document).on("click", "#options", function(){
+        displayAnswer();
     });
-    
+     
+    function time() {
+        --count;
+        console.log(count);
+    }
 });
