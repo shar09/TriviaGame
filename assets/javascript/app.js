@@ -100,7 +100,7 @@ $(document).ready(function() {
     $("#start-button").on("click", function() {
         displayQuestion();
         var intervalId = setInterval(time, 1000);
-        console.log(count);
+        //console.log(count);
     });
 
     $(document).on("click", "#options", function() {
@@ -110,7 +110,7 @@ $(document).ready(function() {
     function time() {
         //$document("#timer").text(+count+" s");
         count--;
-        console.log(count);
+        //console.log(count);
     }
 
     /*function result() {
