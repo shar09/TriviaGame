@@ -3,7 +3,8 @@ $(document).ready(function() {
     var wrong;
     var unanswered;
     var count=30;
-     
+    var objIndex=0;
+    var timeoutId;
     var trivia = [{
     question: "What is Earth's largest Continent?",
     option: ["ASIA", "AFRICA", "EUROPE", "ANTARCTICA"],
@@ -37,7 +38,7 @@ $(document).ready(function() {
     option: ["JERUSALEM", "DAMASCUS", "JERICHO", "ATHENS"],
     answer: "DAMASCUS",
     fact:  "Damascus - The capital of Syria, dating back to at least 11,000 years.",
-    image: "assets/images/image5.jpg",
+    image: "assets/images/image-5.jpg",
     },
     {
     question: "What is the smallest independent country on Earth?" ,
@@ -74,20 +75,26 @@ $(document).ready(function() {
     //clearTimeout(timeoutId);
 
     function displayQuestion() {
-            var intervalId = setInterval(time, 1000);
-            $(".sub-wrapper").html("<div id='time'>"+count+"</div>")
-            $(".sub-wrapper").append("<div id='questions'>" + trivia[0].question + "</div>");
-            $(".sub-wrapper").append("<div id='options' value='+option[0]'>" +trivia[0].option[0]+ "</div>");
-            $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[1]+ "</div>");
-            $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[2]+ "</div>");
-            $(".sub-wrapper").append("<div id='options'>" +trivia[0].option[3]+ "</div>");
-            var timeoutId = setTimeout(displayAnswer, 30000);   
+            var intervalId = setInterval(time(), 1000);
+            $(".sub-wrapper").html("<div id='time'>"+count+"</div>");
+            $(".sub-wrapper").append("<div id='questions'>" + trivia[objIndex].question + "</div>");
+            $(".sub-wrapper").append("<div id='options'>" +trivia[objIndex].option[0]+ "</div>");
+            $(".sub-wrapper").append("<div id='options'>" +trivia[objIndex].option[1]+ "</div>");
+            $(".sub-wrapper").append("<div id='options'>" +trivia[objIndex].option[2]+ "</div>");
+            $(".sub-wrapper").append("<div id='options'>" +trivia[objIndex].option[3]+ "</div>");
+            timeoutId = setTimeout(displayAnswer, 30000);   
         }
-
+    //displays answer
     function displayAnswer() {
-        $(".sub-wrapper").html("<div>" +trivia[0].fact+ "</div>");
-        $(".sub-wrapper").append("<img src="+trivia[0].image+">");
-        var timeoutId = setTimeout(displayAnswer, 10000);
+        $(".sub-wrapper").html("<div id='facts'>" +trivia[objIndex].fact+ "</div>");
+        $(".sub-wrapper").append("<img id='images' src="+trivia[objIndex].image+">");
+        var timeoutId2 = setTimeout(nextQuestion, 6000); 
+    }
+    //goes to next question
+    function nextQuestion() {  
+        clearInterval(timeoutId);
+        objIndex++;
+        displayQuestion();                 
     }
       
     $("#start-button").on("click", function() {
@@ -96,12 +103,11 @@ $(document).ready(function() {
         //console.log(count);
     });
 
-    $(document).on("click", "#options", function(){
+    $(document).on("click", "#options", function() {
         displayAnswer();
     });
-     
+
     function time() {
-        --count;
-        console.log(count);
+        count--;
     }
 });
